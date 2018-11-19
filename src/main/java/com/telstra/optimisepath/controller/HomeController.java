@@ -5,9 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
-	@RequestMapping("/home")
+	@RequestMapping("/pathOptimizer")
 	public String home() {
-		System.out.print("home controller");
 		return "index";
 	}
 }
