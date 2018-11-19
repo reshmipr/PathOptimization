@@ -1,6 +1,5 @@
 package com.telstra.optimisepath.dto;
 
-import java.util.ArrayList;
 
 public class PathDTO {
 	Integer numOfNodes;

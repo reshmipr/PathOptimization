@@ -2,8 +2,6 @@ package com.telstra.optimisepath.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 
 
 @Entity

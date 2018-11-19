@@ -11,15 +11,19 @@ import com.telstra.optimisepath.dto.PathDTO;
 import com.telstra.optimisepath.service.OptimisePathService;
 import com.telstra.optimisepath.utils.Constants;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 @RestController
 @RequestMapping("/path")
 public class OptimisePathController {
+	 private static final Logger logger = LoggerFactory.getLogger(OptimisePathController.class);
+	
 		@Autowired
 		OptimisePathService service;
 
 		@RequestMapping(method = RequestMethod.POST, value = Constants.OPTIMIAL_PATH)
 		public PathDTO optimisePath(@RequestBody PathDTO pathDTO) {
-			System.out.println("pathhh"+pathDTO);
+			logger.info("Entered method optimisePath");
 			return service.optimisePath(pathDTO);
 		}
 		

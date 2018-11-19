@@ -2,10 +2,13 @@ package com.telstra.optimisepath.algorithm;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.telstra.optimisepath.dto.PathDTO;
 
 public class BellmanHeldKarpAlgorithm {
-
+	private static final Logger logger = LoggerFactory.getLogger(BellmanHeldKarpAlgorithm.class);
 	/*
 	 * GLOBAL VARIABLES
 	 */
@@ -63,8 +66,9 @@ public class BellmanHeldKarpAlgorithm {
 			}
 			pathDTO.setOptimalPath(paths[optimal]);
 			pathDTO.setOptimalTotalDistance(finalResults[optimal]);
-			System.out.print("Path: " + paths[optimal] + ". Distance = " + finalResults[optimal]);
+			logger.info("Path: " + paths[optimal] + ". Distance = " + finalResults[optimal]);
 		} catch (Exception e) {
+			logger.info("Error in BellmanHeldKarpAlgorithm"+e.getMessage());
 			throw new IOException("Exception from algorithm" + e.getMessage());
 		}
 

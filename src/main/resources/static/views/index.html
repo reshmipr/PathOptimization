@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="ISO-8859-1">
-    <title>Main Page</title>
+    <title>OptimisePath</title>
 </head>
 <script src="js/lib/angular.min.js"></script>
 <script src="js/lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
@@ -21,9 +21,9 @@
         <button ng-click="optimisePath()" class="btn btn-sm btn-info">Get Optimal path and Optimal distance to cover each city</button>
     </div>
     <hr/>
-   		<label ng-hide="pathDTO.optimalPath===''">Optimal Path between cities</label>
+   		<label ng-if="pathDTO.optimalPath">Optimal Path between cities</label>
         <p>{{pathDTO.optimalPath}}</p>
-   		<label ng-hide="pathDTO.optimalTotalDistance==''">Optimal distance between cities</label>
+   		<label ng-if="pathDTO.optimalTotalDistance">Optimal distance between cities</label>
         <p>{{pathDTO.optimalTotalDistance}}</p>
     </div>
     <hr/>
