@@ -1,92 +1,78 @@
 package com.telstra.optimisepath.algorithm;
 
-import java.io.*;
-import java.util.Scanner;
+import java.io.IOException;
 
+import com.telstra.optimisepath.dto.PathDTO;
 
 public class BellmanHeldKarpAlgorithm {
 
 	/*
 	 * GLOBAL VARIABLES
 	 */
-	private static int[][] distances;
-	private static int finalResults[];
-	private static String paths[];
-	private static int counter = 0;
+	private  int[][] distances;
+	private  int finalResults[];
+	private  String paths[];
+	private  int counter = 0;
 
-
-	public static void main(String args[]) throws IOException {
+	public  PathDTO getOptimisedPath(PathDTO pathDTO) throws IOException {
 
 		try {
-		// The path to the files with the distances is asked
-		Scanner input = new Scanner(System.in);
-		System.out.println("Please provide the input file path containing adjacency matrix of distance between cities.");
-		String file = input.nextLine();
 
-		// The size of the distance matrix is asked
-		System.out.println("Please provide the number of nodes");
-		int size = input.nextInt();
+			// get the number of nodes
+			int size = pathDTO.getNumOfNodes();
 
-		// Global variables are initialized considering the size of the matrix
-		int numSolutions = factorial(size - 1);
-		distances = new int[size][size];
-		finalResults = new int[numSolutions];
-		paths = new String[numSolutions];
+			// Global variables are initialized considering the size of the matrix
+			int numSolutions = factorial(size - 1);
+			distances = new int[size][size];
+			finalResults = new int[numSolutions];
+			paths = new String[numSolutions];
 
-		// The file in that location is opened
-		FileReader f = new FileReader(file);
-		BufferedReader b = new BufferedReader(f);
+			String[] inputValues = pathDTO.getAdjacencyMatrix().split("\n");
 
-		// Our matrix is filled with the values of the file matrix
-		for (int row = 0; row < size; row++) {
+			int inputValuesIncrement = 0;
 
-			// Every value of each row is read and stored
-			String line = b.readLine();
-			String[] values = line.trim().split("\\s+");
+			for (int i = 0; i < size; i++) {
 
-			for (int col = 0; col < size; col++) {
-				distances[row][col] = Integer.parseInt(values[col]);
+				String[] inputValues1 = inputValues[inputValuesIncrement].split(" ");
+				int input = 0;
+				for (int j = 0; j < size; j++) {
+					distances[i][j] = Integer.parseInt(inputValues1[input]);
+					input++;
+				}
+				inputValuesIncrement++;
 			}
-		}
 
-		// Closing file
-		b.close();
+			// Start algorithm
+			String path = "";
+			int[] vertices = new int[size - 1];
 
-	
-		// Start algorithm
-		String path = "";
-		int[] vertices = new int[size - 1];
-
-		// Filling the initial vertices array with the proper values
-		for (int i = 1; i < size; i++) {
-			vertices[i - 1] = i;
-		}
-
-		
-		int distance = calculateDistance(0, vertices, path, 0);
-
-		int optimal = 0;
-		for (int i = 0; i < numSolutions; i++) {
-
-			// When we reach the optimal one, its index is saved
-			if (finalResults[i] == distance) {
-				optimal = i;
+			// Filling the initial vertices array with the proper values
+			for (int i = 1; i < size; i++) {
+				vertices[i - 1] = i;
 			}
+
+			int distance = calculateDistance(0, vertices, path, 0);
+
+			int optimal = 0;
+			for (int i = 0; i < numSolutions; i++) {
+
+				// When we reach the optimal one, its index is saved
+				if (finalResults[i] == distance) {
+					optimal = i;
+				}
+			}
+			pathDTO.setOptimalPath(paths[optimal]);
+			pathDTO.setOptimalTotalDistance(finalResults[optimal]);
+			System.out.print("Path: " + paths[optimal] + ". Distance = " + finalResults[optimal]);
+		} catch (Exception e) {
+			throw new IOException("Exception from algorithm" + e.getMessage());
 		}
-		System.out.println();
-		System.out.print("Path: " + paths[optimal] + ". Distance = " + finalResults[optimal] );
-	}catch(Exception e) {
-		
-	}
-		
+
+		return pathDTO;
+
 	}
 
-	/*
-	 * 
-	 * 
-	 */
-
-	public static int calculateDistance(int initial, int vertices[], String path, int unitCost) {
+	public  int calculateDistance(int initial, int vertices[], String path, int unitCost) {
 
 		// We concatenate the current path and the vertex taken as initial
 		path = path + Integer.toString(initial) + " - ";
@@ -148,7 +134,7 @@ public class BellmanHeldKarpAlgorithm {
 	}
 
 	// Factorial function used to calculate the number of solutions
-	public static int factorial(int n) {
+	public  int factorial(int n) {
 
 		if (n <= 1) {
 			return 1;
