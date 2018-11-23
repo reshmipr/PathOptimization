@@ -1,24 +1,18 @@
 package com.telstra.optimisepath.entity;
 
-import javax.persistence.*;
-import java.io.Serializable;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Entity
-public class Path implements Serializable {
+@Document
+public class Path {
 
-	private static final long serialVersionUID = 0x62A6DA99AABDA8A8L;
-	@Column
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id
-	private Integer pathId;
-	@Column
+	private String pathId;
 	private Integer numOfNodes;
-	@Column
 	private String adjacencyMatrix;
-	@Column
 	private String optimalPath;
-	@Column
 	private Integer optimalCost;
 
 	public Path(Integer numOfNodes, String adjacencyMatrix, String optimalPath, Integer optimalCost) {
@@ -56,11 +50,12 @@ public class Path implements Serializable {
 		this.optimalPath = optimalPath;
 	}
 
-	public Integer getPathId() {
+
+	public String getPathId() {
 		return pathId;
 	}
 
-	public void setPathId(Integer pathId) {
+	public void setPathId(String pathId) {
 		this.pathId = pathId;
 	}
 
